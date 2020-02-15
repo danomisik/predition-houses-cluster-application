@@ -1,0 +1,18 @@
+deployment.apps/ml-service-kubectl created
+NAME                                 READY   STATUS              RESTARTS   AGE
+ml-service-kubectl-bc8cdccc9-pz2xb   0/1     ContainerCreating   0          1s
+error: unable to forward port because pod is not running. Current status=Pending
+
+RUNNING SCRIPT AGAIN:
+Error from server (AlreadyExists): deployments.apps "ml-service-kubectl" already exists
+NAME                                 READY   STATUS    RESTARTS   AGE
+ml-service-kubectl-bc8cdccc9-pz2xb   1/1     Running   0          3m34s
+Forwarding from 127.0.0.1:8000 -> 80
+Forwarding from [::1]:8000 -> 80
+Handling connection for 8000
+RESPONSE FROM APP TO THE CLIENT:
+{
+  "prediction": [
+    20.35373177134412
+  ]
+}
