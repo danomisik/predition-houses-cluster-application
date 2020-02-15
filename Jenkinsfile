@@ -1,4 +1,9 @@
 pipeline {
+    environment {
+      registry = "gustavoapolinario/docker-test"
+      registryCredential = 'dockerhub'
+      dockerImage = ''
+    }
     agent any
     stages {
       stage('Install dependencies') {
@@ -18,5 +23,22 @@ pipeline {
           """
         }
       }
+      stage('Building image') {
+        steps{
+          script {
+            dockerImage = docker.build danielmisik/udacity:ml-service
+          }
+        }
+      }
+      stage('Deploy Image') {
+        steps{
+          script {
+            docker.withRegistry( '', registryCredential ) {
+              dockerImage.push()
+            }
+          }
+        }
+      }
+
     }
 }
