@@ -26,7 +26,7 @@ pipeline {
       stage('Building image') {
         steps{
           script {
-            dockerImage = docker.build danielmisik/udacity:ml-service
+            dockerImage = docker.build "danielmisik/udacity:ml-service"
           }
         }
       }
