@@ -6,7 +6,14 @@ Project is consist of 2 parts: Development part and Production deployment part. 
 # Setup Jenkins
 To setup Jenkins confogire this
 1. Install Hadolint: `wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 && chmod +x /bin/hadolint`
-2. Install ansible
+2. Awscli install: pip install awscli
+3. install-aws-iam-authenticator
+4. Install Docker : https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04
+4. install kubernetes : https://kubernetes.io/docs/tasks/tools/install-kubectl/
+2. Install ansible newest version
+pip install openshift
+pip install boto boto3
+
 
 
 ---

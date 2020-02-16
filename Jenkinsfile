@@ -30,13 +30,18 @@ pipeline {
           }
         }
       }
-      stage('Deploy Image') {
+      stage('Push Image') {
         steps{
           script {
             docker.withRegistry( '', registryCredential ) {
               dockerImage.push()
             }
           }
+        }
+      }
+      stage('Deploy Kubernetes Application') {
+        steps{
+          ansiblePlaybook playbook: 'deploy.yml', inventory: 'inventory'
         }
       }
 
