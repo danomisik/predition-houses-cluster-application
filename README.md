@@ -1,43 +1,24 @@
-[![danomisik](https://circleci.com/gh/danomisik/ml-microservice-kubernetes.svg?style=svg)](https://circleci.com/gh/danomisik/ml-microservice-kubernetes)
 
-## Project Overview
 
-In this project, you will apply the skills you have acquired in this course to operationalize a Machine Learning Microservice API. 
+# Project Overview
+Project is consist of 2 parts: Development part and Production deployment part. Deplopment and Deployment parts are connected trought Jenkins pipeline, defined in `Jenkinsfile`.
 
-You are given a pre-trained, `sklearn` model that has been trained to predict housing prices in Boston according to several features, such as average rooms in a home and data about highway access, teacher-to-pupil ratios, and so on. You can read more about the data, which was initially taken from Kaggle, on [the data source site](https://www.kaggle.com/c/boston-housing). This project tests your ability to operationalize a Python flask app—in a provided file, `app.py`—that serves out predictions (inference) about housing prices through API calls. This project could be extended to any pre-trained machine learning model, such as those for image recognition and data labeling.
+# Setup Jenkins
+To setup Jenkins confogire this
+1. Install Hadolint: `wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 && chmod +x /bin/hadolint`
+2. Install ansible
 
-### Project Tasks
-
-Your project goal is to operationalize this working, machine learning microservice using [kubernetes](https://kubernetes.io/), which is an open-source system for automating the management of containerized applications. In this project you will:
-* Test your project code using linting
-DONE: `make lint ` or push code to github and circle ci will start whole pipelne with linting
-* Complete a Dockerfile to containerize this application
-DONE: You can check ./Dockerfile for implementation of Dockerfile
-* Deploy your containerized application using Docker and make a prediction
-DONE: You can check implemented result in files: ./run_docker.sh , ./upload_docker.sh and ./make_predition.sh
-* Improve the log statements in the source code for this application
-DONE: I added log statement for logging predition output. You can see it in app.py
-* Configure Kubernetes and create a Kubernetes cluster
-DONE: I configured Kubernetes and 
-* Deploy a container using Kubernetes and make a prediction
-DONE: I deployed Kubernetes cluster, you can see used commands inside ./run_kubernetes.sh
-* Upload a complete Github repo with CircleCI to indicate that your code has been tested
-DONE: I fully integrated CircleCI with my github repo. You can see markdown PASSED in top of README file.
-
-You can find a detailed [project rubric, here](https://review.udacity.com/#!/rubrics/2576/view).
-
-**The final implementation of the project will showcase your abilities to operationalize production microservices.**
 
 ---
-## Summary of project
+## Development part - Summary of project
 
 Project overview:
-* `.circleci/config.yml` : Implementation of circleci configuration file. This file is important for CircleCI integration with github repo.
 * `model_data` folder : In this folder are data of prediction model.
 * `output_txt_files` folder : You can find in this folder my outputs for docker deployment and for kubernetes deployment.
 * `app.py` : This python file is lightweight flask app for predicting prices of houses in Boston. 
 * `Dockerfile` : Containerized application app.py written as Dockerfile.
-* `make_prediction.sh` : This bash script is used for testing deployed application. you can start it with : `bash make_prediction.sh`
+* `make_prediction.sh` : This bash script is used for testing deployed application. You can start it with : `bash make_prediction.sh`
+* `make_prediction_production.sh` : This bash script is used for testing deployed application in production. You can start it with : `bash make_prediction_production.sh`
 * `Makefile` : Makefile of the project.
 * `README.md` : Quick guide how to start with this project.
 * `requirements.txt` : This file includes dependencies needed for python. This dependencies needs to be installed before starting application.
@@ -47,7 +28,7 @@ Project overview:
 
 
 
-## Setup the Environment
+### Setup the Environment
 
 * Project was developing in Ubuntu 18.04. All commands are changed for using in this environment.
 * Create a virtualenv and activate it : `python3 -m venv ~/.devops` `source ~/.devops/bin/activate`
@@ -64,22 +45,23 @@ Project overview:
 
 * Start run_docker.sh file like this `bash ./run_docker.sh` for building and running Docker file.
 * Start make_prediction.sh file like this `bash ./make_prediction.sh` for testing deployed app.
+* Start make_prediction_production.sh file like this `bash ./make_prediction_production.sh` for testing deployed app in production.
 
-### Kubernetes Steps
+### Kubernetes Steps for localhost
 
 * Setup and Configure Docker locally
 * Setup and Configure Kubernetes locally
 * Create Flask app in Container
 * Run via kubectl
 
-#### Kubernetes deployment and testing
+#### Kubernetes deployment and testing for localhost
 
 * Start run_docker.sh file like this `bash ./run_docker.sh` for building Docker file.
 * Start upload_docker.sh file like this `bash ./upload_docker.sh` for uploading Docker image to Dockerhub.
 * Start run_kubernetes.sh file like this `bash ./run_kubernetes.sh` for starting kubernetes cluster.
 * Start make_prediction.sh file like this `bash ./make_prediction.sh` for testing deployed app.
 
-#### Quick tips for Kubernetes delete
+#### Quick tips for Kubernetes delete for localhost
 
 Deployed application can be delete with this command: `kubectl delete deployment ml-service-kubectl`
 
@@ -87,13 +69,93 @@ Deployed application can be delete with this command: `kubectl delete deployment
 * If you will have problem start some bash script, it is probably because  Mac end-of-line in this files(original template of project was created in Mac). Just use this command and everything should be fine: `tr -d '\15\32' < macfile.txt > unixfile.txt`
 * I had problem to build app.py properly, so I downgrade sklearn to 0.20.2 version. You can see it in requirements.txt as it is here: `scikit-learn==0.20.2`
 
+## Production deployment part - AWS EKS Kubernetes Cluster 
+
+This example demonstrates the setup of a highly-available AWS EKS Kubernetes cluster using Ansible to manage multiple CloudFormation templates.
+
+## Citation of used Cluster examlpe
+In my Kubernetes Cluster Example I used and partially changed source code from [this repo]( https://github.com/geerlingguy/ansible-for-kubernetes.git ) from book Ansible for Kubernetes by Jeff Geerling.
+Buy [Ansible for Kubernetes](https://www.ansibleforkubernetes.com/) for your e-reader or in paperback format.
+
+From this repo are all EKS Kubernetes Cluster files:
+ - main.py
+ - deploy.py
+ - cloudformation/*
+ - housepred/*
+ - vars/*
+ - delete.py
+ - inventory
+ - ansible-lint
+
+### Usage
+
+Prerequisites:
+
+  - You must have an AWS account to run this example.
+  - You must use an IAM account with privileges to create VPCs, Internet Gateways, EKS Clusters, Security Groups, etc.
+  - This IAM account will inherit the `system:master` permissions in the cluster, and only that account will be able to make the initial changes to the cluster via `kubectl` or Ansible.
+
+#### Build the Cluster via CloudFormation Templates with Ansible
+
+Make sure you have the `boto` Python library installed (e.g. via Pip with `pip3 install boto`), and then run the playbook to build the EKS cluster and nodegroup:
+
+    $ ansible-playbook -i inventory main.yml
+
+> Note: EKS Cluster creation is a slow operation, and could take 10-20 minutes.
+
+After the cluster and nodegroup are created, you should see one EKS cluster and three EC2 instances running, and you can start to manage the cluster with Ansible.
+
+#### Set up authentication to the cluster via `kubeconfig`
+
+  1. Install the `aws-iam-authenticator` following [these directions](https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html).
+  2. Create a `kubeconfig` file for EKS following [these directions](https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html):
+
+     ```
+     $ aws eks --region eu-central-1 update-kubeconfig --name eks-housepred-services --kubeconfig ~/.kube/eks-housepred-services
+     ```
+
+     This creates a `kubeconfig` file located in `~/kube/eks-housepred-services`.
+  3. Tell `kubectl` where to find the `kubeconfig`:
+
+     ```
+     $ export KUBECONFIG=~/.kube/eks-housepred-services
+     ```
+  4. Test that `kubectl` can see the cluster:
+
+     ```
+     $ kubectl get svc
+     NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+     kubernetes   ClusterIP   10.100.0.1   <none>        443/TCP   19m
+     ```
+
+#### Deploy an application to EKS with Ansible
+
+There is a `deploy.yml` playbook which deploys a House Prediction Service into the Kubernetes cluster.
+
+Run the playbook to deploy the website:
+
+    $ ansible-playbook -i inventory deploy.yml
+
+##### Manage DNS for House Prediction Service with Route53 and Ansible
+
+If you set the following variables inside `vars/main.yml`, the Ansible playbook will also create a DNS A record pointing to the House Prediction Service Load Balancer for you:
+
+    housepred_route53_zone: example.com
+    housepred_route53_domain: housepred.example.com
+
+Using this feature presumes you already have the hosted zone (e.g. `example.com`) configured in Route53.
+
+> Note: If you don't have a zone configured in Route 53, you can leave these settings blank, and access the load balancer URL via DNS directly. You can find the load balancer's direct URL in the AWS Management Console, in the ELB's details in EC2 > Load Balancers.
 
 
 
-Install on jenkins server:4
-Hadolint: `wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 && chmod +x /bin/hadolint`
+#### Delete the cluster and associated resources
 
+After you're finished testing the cluster, run the `delete.yml` playbook:
 
+    $ ansible-playbook -i inventory delete.yml
+
+> Note: It's important to delete test clusters you're not actively using; each cluster is billed at the [EKS cluster hourly rate](https://aws.amazon.com/eks/pricing/) and can lead to unexpected charges at the end of the month!
 
 
 

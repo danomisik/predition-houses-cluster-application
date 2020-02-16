@@ -1,0 +1,27 @@
+---
+# AWS Settings.
+aws_environment: true
+aws_region: eu-central-1
+aws_profile: default
+
+# This variable will be populated during playbook runs.
+stack_outputs: {}
+
+# EKS Cluster settings.
+eks_cluster_name: eks-housepred-services
+# See: https://docs.aws.amazon.com/eks/latest/userguide/platform-versions.html
+eks_kubernetes_version: "1.14"
+
+# Nodegroup settings.
+eks_nodegroup_name: eks-housepred-services-nodegroup
+eks_nodegroup_instance_type: t3.medium
+eks_nodegroup_cluster_size: 3
+
+
+# Domain settings for Route53 DNS.
+housepred_route53_zone: '' # e.g. 'example.com'
+housepred_route53_domain: '' # e.g. 'housepred.example.com'
+
+# Kubernetes settings.
+k8s_kubeconfig: ~/.kube/eks-housepred-services
+k8s_no_log: true
