@@ -8,8 +8,14 @@ pipeline {
     stages {
       stage('Deploy Kubernetes Application') {
         steps{
-          sh 'pip install openshift'
-          ansiblePlaybook playbook: 'deploy.yml', inventory: 'inventory'
+          sh 'python3 -m venv venv'
+          sh """
+          . venv/bin/activate
+          make install
+          pip install openshift
+          pip install boto
+          ansible-playbook -i inventory deploy.yml
+          """ 
         }
       }
 
