@@ -9,7 +9,7 @@ pipeline {
       stage('Deploy Kubernetes Application') {
         steps{
           sh """
-          ansible-playbook -i inventory deploy.yml --user=ubuntu -vvv
+          ansible-playbook -i inventory deploy.yml -e 'ansible_python_interpreter=/usr/bin/python3.6' -vvv
           """ 
         }
       }
