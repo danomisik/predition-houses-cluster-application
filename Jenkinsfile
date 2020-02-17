@@ -9,7 +9,7 @@ pipeline {
       stage('Deploy Kubernetes Application') {
         steps{
           sh """
-          ansible-playbook -i inventory deploy.yml -vvv
+          ansible-playbook -i inventory deploy.yml --user=ubuntu -vvv
           """ 
         }
       }
