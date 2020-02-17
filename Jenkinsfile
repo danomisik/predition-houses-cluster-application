@@ -12,7 +12,7 @@ pipeline {
           sh """
           . venv/bin/activate
           make install
-          pip install openshift
+          /usr/bin/python -m pip install --upgrade --user openshift
           pip install boto
           ansible-playbook -i inventory deploy.yml -vvv
           """ 
