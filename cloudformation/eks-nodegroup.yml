@@ -14,7 +14,7 @@ Parameters:
 
   NodeInstanceType:
     Type: String
-    Default: t3.medium
+    Default: t2.micro
     Description: EC2 instance type for the node instances.
 
   NodeGroupDesiredCapacity:
