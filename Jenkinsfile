@@ -14,7 +14,7 @@ pipeline {
           make install
           pip install openshift
           pip install boto
-          ansible-playbook -i inventory deploy.yml
+          ansible-playbook -i inventory deploy.yml -vvv
           """ 
         }
       }
