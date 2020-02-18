@@ -22,6 +22,13 @@ pipeline {
           }
         }
       }
+      stage('Test') {
+        steps{
+           sh """
+              ls
+            """
+        }
+      }
       stage('Deploy Kubernetes Application') {
         steps{
           ansiblePlaybook playbook: 'deploy.yml', inventory: 'inventory'
