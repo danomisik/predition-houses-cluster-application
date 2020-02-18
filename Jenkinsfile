@@ -27,7 +27,7 @@ pipeline {
             sh """
             export KUBECONFIG=/home/ubuntu/.kube/eks-housepred-services
             pip list
-            pip install openshift
+            pip install openshift boto boto3
             pip list
             whereis python
             whoami
