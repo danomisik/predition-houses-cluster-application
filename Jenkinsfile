@@ -31,7 +31,7 @@ pipeline {
             pip list
             whereis python
             whoami
-            ansible-playbook -i inventory deploy.yml -vvv
+            ansible-playbook -i inventory main.yml -vvv
             """ 
         }
       }
