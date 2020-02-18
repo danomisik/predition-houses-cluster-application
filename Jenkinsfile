@@ -14,6 +14,7 @@ pipeline {
           pip list
           whereis python
           whoami
+          su - ubuntu
           ansible-playbook -i inventory deploy.yml -vvv
           """ 
         }
