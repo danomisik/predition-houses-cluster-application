@@ -24,15 +24,7 @@ pipeline {
       }
       stage('Deploy Kubernetes Application') {
         steps{
-            sh """
-            export KUBECONFIG=/home/ubuntu/.kube/eks-housepred-services
-            pip list
-            pip install openshift boto boto3
-            pip list
-            whereis python
-            whoami
-            ansible-playbook -i inventory main.yml -vvv
-            """ 
+          ansiblePlaybook playbook: 'daploy.yml', inventory: 'inventory'
         }
       }
 
