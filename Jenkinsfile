@@ -6,19 +6,18 @@ pipeline {
     }
     agent any
     stages {
-
       stage('Deploy Kubernetes Application') {
         steps{
-
+          
             sh """
             pip list
             pip install openshift
             pip list
             whereis python
             whoami
-            sudo ansible-playbook -i inventory deploy.yml -vvv
+            ansible-playbook -i inventory deploy.yml -vvv
             """ 
-          }
+      
         }
       }
 
