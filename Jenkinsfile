@@ -31,7 +31,7 @@ pipeline {
       }
       stage('Deploy Kubernetes Application') {
         steps{
-          ansiblePlaybook playbook: 'deploy.yml', inventory: 'inventory'
+          ansiblePlaybook playbook: 'deploy.yml', inventory: 'inventory' '-vvv'
         }
       }
 
