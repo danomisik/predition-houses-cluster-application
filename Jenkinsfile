@@ -10,12 +10,14 @@ pipeline {
         steps{
           withAWS(region:'eu-central-1',credentials:'aws-static') {
             sh """
+            aws eks --region eu-central-1 update-kubeconfig --name eks-housepred-services --kubeconfig ~/.kube/eks-housepred-services
+            export KUBECONFIG=~/.kube/eks-housepred-services
+            kubectl get svc
             pip list
             pip install openshift
             pip list
             whereis python
             whoami
-            su - ubuntu
             ansible-playbook -i inventory deploy.yml -vvv
             """ 
           }
