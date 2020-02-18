@@ -6,7 +6,7 @@ pipeline {
     }
     agent any
     stages {
-      stage('Deploy Kubernetes Application') {
+      stage('AWC Credentials') {
         steps{
           withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'MyCredentials', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
           sh """
@@ -21,6 +21,7 @@ pipeline {
           """
           }
         }
+      }
       stage('Deploy Kubernetes Application') {
         steps{
 
