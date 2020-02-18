@@ -14,7 +14,7 @@ pipeline {
           pip list
           whereis python
           whoami
-          ansible-playbook -i inventory deploy.yml -e 'ansible_python_interpreter=/usr/bin/python3.6' -vvv
+          ansible-playbook -i inventory deploy.yml -vvv
           """ 
         }
       }
