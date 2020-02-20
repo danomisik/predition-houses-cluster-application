@@ -11,7 +11,6 @@ pipeline {
            sh """
               export PATH=/var/lib/jenkins/.local/bin/:$PATH
               echo $PATH
-              find / -name kubectl -print 2>/dev/null
               ls -l /usr/local/bin/kubectl
               ls -l /usr/bin/kubectl
               /usr/local/bin/kubectl --help
