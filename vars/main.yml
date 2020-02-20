@@ -15,7 +15,7 @@ eks_kubernetes_version: "1.14"
 # Nodegroup settings.
 eks_nodegroup_name: eks-housepred-services-nodegroup
 eks_nodegroup_instance_type: t2.micro
-eks_nodegroup_cluster_size: 3
+eks_nodegroup_cluster_size: 2
 
 
 # Domain settings for Route53 DNS.

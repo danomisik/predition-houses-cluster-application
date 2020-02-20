@@ -32,6 +32,7 @@ pipeline {
       stage('Deploy Kubernetes Application') {
         steps{
           sh """
+            pip install ansible --user
             ansible-playbook -i inventory deploy.yml -vvv
           """  
         }

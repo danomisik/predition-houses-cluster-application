@@ -21,6 +21,13 @@ Parameters:
     Type: Number
     Default: 3
     Description: Desired capacity of Node Group ASG.
+  
+  EbsVolumeSize:
+    Type: Number
+    Description: >
+      Optional - Specifies the Size in GBs, of the newly created Amazon
+      Elastic Block Store (Amazon EBS) volume
+    Default: '4'
 
   Subnets:
     Type: "List<AWS::EC2::Subnet::Id>"
@@ -51,6 +58,7 @@ Resources:
     Properties:
       NodegroupName: !Ref NodeGroupName
       ClusterName: !Ref ClusterName
+      DiskSize: !Ref EbsVolumeSize
       NodeRole: !GetAtt NodeInstanceRole.Arn
       InstanceTypes:
         - !Ref NodeInstanceType
