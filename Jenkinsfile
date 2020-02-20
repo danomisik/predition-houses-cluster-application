@@ -15,7 +15,7 @@ pipeline {
               ls -l /usr/bin/kubectl
               /usr/local/bin/kubectl --help
               /usr/bin/kubectl --help
-              aws eks --region eu-central-1 update-kubeconfig --name eks-housepred-services --kubeconfig ~/.kube/eks-housepred-services
+              aws eks --region eu-central-1 update-kubeconfig --name eks-housepred-services --kubeconfig /var/lib/jenkins/.kube/eks-housepred-services
               export KUBECONFIG=/var/lib/jenkins/.kube/eks-housepred-services
               kubectl get svc 2>&1
             """
@@ -26,6 +26,7 @@ pipeline {
           sh """
             export PATH=/var/lib/jenkins/.local/bin/:$PATH
             export KUBECONFIG=/var/lib/jenkins/.kube/eks-housepred-services
+            kubectl get svc 2>&1
             ansible-playbook -i inventory deploy.yml -vvv
           """  
         }
