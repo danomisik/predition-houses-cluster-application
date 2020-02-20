@@ -15,6 +15,8 @@ pipeline {
               ls -l /usr/bin/kubectl
               /usr/local/bin/kubectl --help
               /usr/bin/kubectl --help
+              aws eks --region eu-central-1 update-kubeconfig --name eks-housepred-services --kubeconfig ~/.kube/eks-housepred-services
+              export KUBECONFIG=~/.kube/eks-housepred-services
               kubectl get svc 2>&1
             """
         }
