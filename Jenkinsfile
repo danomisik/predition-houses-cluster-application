@@ -24,6 +24,8 @@ pipeline {
       stage('Deploy Kubernetes Application') {
         steps{
           sh """
+            export PATH=/var/lib/jenkins/.local/bin/:$PATH
+            export KUBECONFIG=/var/lib/jenkins/.kube/eks-housepred-services
             ansible-playbook -i inventory deploy.yml -vvv
           """  
         }
