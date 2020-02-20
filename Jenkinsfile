@@ -12,7 +12,6 @@ pipeline {
               export PATH=/var/lib/jenkins/.local/bin/:$PATH
               echo $PATH
               find / -name kubectl -print 2>/dev/null
-              man kubcl
               kubectl get svc
             """
         }
