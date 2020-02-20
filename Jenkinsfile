@@ -9,6 +9,8 @@ pipeline {
       stage('Test') {
         steps{
            sh """
+              echo $PATH
+              find / -name kubectl -print 2>/dev/null
               kubectl get svc
             """
         }
