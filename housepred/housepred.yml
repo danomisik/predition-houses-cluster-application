@@ -37,7 +37,7 @@ spec:
     spec:
       containers:
       - image: danielmisik/udacity:ml-service:latest
-        imagePullPolicy: "Always:
+        imagePullPolicy: "Always"
         name: housepred
         ports:
         - containerPort: 80
