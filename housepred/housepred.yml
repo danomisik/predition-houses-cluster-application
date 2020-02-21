@@ -26,17 +26,16 @@ spec:
   selector:
     matchLabels:
       app: housepred
-      tier: frontend
+      role: rolling-update
   strategy:
-  type: RollingUpdate
-  rollingUpdate:
-    maxSurge: 1
-    maxUnavailable: 25%
+    type: RollingUpdate
+    rollingUp      maxSurge: 50%
   template:
     metadata:
       labels:
+        build_number: v1
         app: housepred
-        tier: frontend
+        role: rolling-update
     spec:
       containers:
       - image: danielmisik/udacity:ml-service:latest
@@ -45,3 +44,7 @@ spec:
         ports:
         - containerPort: 80
           name: housepred
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
