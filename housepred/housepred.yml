@@ -26,17 +26,14 @@ spec:
   selector:
     matchLabels:
       app: housepred
-      role: rolling-update
   strategy:
     type: RollingUpdate
-    rollingUp      maxSurge: 50%
   template:
     metadata:
       labels:
         build_number: v1
         app: housepred
         tier: frontend
-        role: rolling-update
     spec:
       containers:
       - image: danielmisik/udacity:ml-service:latest
