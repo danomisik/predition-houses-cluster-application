@@ -1,22 +1,28 @@
 
 
-# Project Overview
-Project is consist of 2 parts: Development part and Production deployment part. Deplopment and Deployment parts are connected trought Jenkins pipeline, defined in `Jenkinsfile`.
 
-# Setup Jenkins
-To setup Jenkins confogire this
+
+# Fast Start-up
+1. Create VPC and Cluster in Amazon AWS: `ansible-playbook -i inventory main.yml -vvv`
+2. Connect Github repo with Jenkins
+3. Start Jenkins pipeline
+
+# Project Overview
+Project is consist of 3 parts: 
+ - Jenkins setup and Jenkins pipeline defined in `Jenkinsfile`.
+ - Development part 
+ - Production deployment part
+
+## Jenkins setup 
+To setup Jenkins confogire this:
 1. Install Hadolint: `wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 && chmod +x /bin/hadolint`
 2. Awscli install: pip install awscli
-3. install-aws-iam-authenticator
+3. Install-aws-iam-authenticator
 4. Install Docker : https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04
-4. install kubernetes : https://kubernetes.io/docs/tasks/tools/install-kubectl/
-2. Install ansible newest version
-pip install openshift
-pip install boto boto3
+5. Install kubernetes : https://kubernetes.io/docs/tasks/tools/install-kubectl/
+6. Install newest version of ansible
+7. Install other useful packages: `pip install openshift boto boto3`
 
-
-
----
 ## Development part - Summary of project
 
 Project overview:
@@ -54,7 +60,7 @@ Project overview:
 * Start make_prediction.sh file like this `bash ./make_prediction.sh` for testing deployed app.
 * Start make_prediction_production.sh file like this `bash ./make_prediction_production.sh` for testing deployed app in production.
 
-### Kubernetes Steps for localhost
+### Kubernetes on localhost
 
 * Setup and Configure Docker locally
 * Setup and Configure Kubernetes locally
@@ -72,16 +78,12 @@ Project overview:
 
 Deployed application can be delete with this command: `kubectl delete deployment ml-service-kubectl`
 
-## Problem solving
-* If you will have problem start some bash script, it is probably because  Mac end-of-line in this files(original template of project was created in Mac). Just use this command and everything should be fine: `tr -d '\15\32' < macfile.txt > unixfile.txt`
-* I had problem to build app.py properly, so I downgrade sklearn to 0.20.2 version. You can see it in requirements.txt as it is here: `scikit-learn==0.20.2`
-
 ## Production deployment part - AWS EKS Kubernetes Cluster 
 
 This example demonstrates the setup of a highly-available AWS EKS Kubernetes cluster using Ansible to manage multiple CloudFormation templates.
 
-## Citation of used Cluster examlpe
-In my Kubernetes Cluster Example I used and partially changed source code from [this repo]( https://github.com/geerlingguy/ansible-for-kubernetes.git ) from book Ansible for Kubernetes by Jeff Geerling.
+### Cluster overview
+ In this project I used partially changed source code from [this repo]( https://github.com/geerlingguy/ansible-for-kubernetes.git ) from book Ansible for Kubernetes by Jeff Geerling.
 Buy [Ansible for Kubernetes](https://www.ansibleforkubernetes.com/) for your e-reader or in paperback format.
 
 From this repo are all EKS Kubernetes Cluster files:
