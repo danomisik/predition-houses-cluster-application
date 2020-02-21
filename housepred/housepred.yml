@@ -26,6 +26,7 @@ spec:
   selector:
     matchLabels:
       app: housepred
+      tier: frontend
       role: rolling-update
   strategy:
     type: RollingUpdate
@@ -35,6 +36,7 @@ spec:
       labels:
         build_number: v1
         app: housepred
+        tier: frontend
         role: rolling-update
     spec:
       containers:
