@@ -27,7 +27,7 @@ pipeline {
       stage('Building image') {
         steps{
           script {
-            def dockerImage = docker.build registry + ":$BUILD_NUMBER"
+            dockerImage = docker.build registry + ":$BUILD_NUMBER"
           }
         }
       }
@@ -44,7 +44,7 @@ pipeline {
       }
       stage('Deploy Kubernetes Application') {
         steps{
-          def image_id = registry + ":$BUILD_NUMBER"
+          image_id = registry + ":$BUILD_NUMBER"
           sh """
             export PATH=/var/lib/jenkins/.local/bin/:$PATH
             aws eks --region eu-central-1 update-kubeconfig --name eks-housepred-services --kubeconfig /var/lib/jenkins/.kube/eks-housepred-services
