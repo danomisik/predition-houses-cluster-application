@@ -18,7 +18,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: housepred
+  name: housepred-v2
   namespace: default
   labels:
     app: housepred
