@@ -1,6 +1,7 @@
 pipeline {
     environment {
       registryCredential = 'dockerhub'
+      registry = "danielmisik/udacity:ml-service"
       dockerImage = ''
     }
     agent any
@@ -26,27 +27,30 @@ pipeline {
       stage('Building image') {
         steps{
           script {
-            dockerImage = docker.build "danielmisik/udacity:ml-service"
+            def dockerImage = docker.build registry + ":$BUILD_NUMBER"
           }
         }
       }
       stage('Push Image') {
         steps{
           script {
+
             docker.withRegistry( '', registryCredential ) {
               dockerImage.push()
+              appimage.push('latest')
             }
           }
         }
       }
       stage('Deploy Kubernetes Application') {
         steps{
+          def image_id = registry + ":$BUILD_NUMBER"
           sh """
             export PATH=/var/lib/jenkins/.local/bin/:$PATH
             aws eks --region eu-central-1 update-kubeconfig --name eks-housepred-services --kubeconfig /var/lib/jenkins/.kube/eks-housepred-services
             export KUBECONFIG=/var/lib/jenkins/.kube/eks-housepred-services
             kubectl get svc 2>&1
-            ansible-playbook -i inventory deploy.yml -vvv
+            ansible-playbook -i inventory deploy.yml --extra-vars \"image_id=${image_id}\" -vvv
           """  
         }
       }
