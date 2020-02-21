@@ -1,7 +1,7 @@
 pipeline {
     environment {
       registryCredential = 'dockerhub'
-      registry = "danielmisik/udacity:ml-service"
+      registry = "danielmisik/udacity"
       dockerImage = ''
     }
     agent any
@@ -27,9 +27,9 @@ pipeline {
       stage('Build and Push Image') {
         steps{
           script {
-            def appimage = docker.build registry 
+            def appimage = docker.build registry + ":$BUILD_NUMBER"
             docker.withRegistry( '', registryCredential ) {
-              appimage.push(":$BUILD_NUMBER" )
+              appimage.push()
               appimage.push('latest')
             }
           }
