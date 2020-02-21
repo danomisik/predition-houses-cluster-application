@@ -57,6 +57,6 @@
         region: "{{ aws_region }}"
         profile: "{{ aws_profile }}"
       with_items:
-        - eks-example-nodegroup
-        - eks-example-cluster
-        - eks-example-vpc
+        - eks-housepred-nodegroup
+        - eks-housepred-cluster
+        - eks-housepred-vpc
