@@ -37,14 +37,16 @@ pipeline {
       }
       stage('Deploy Kubernetes Application') {
         steps{
-          def image_id = registry + ":$BUILD_NUMBER"
-          sh """
-            export PATH=/var/lib/jenkins/.local/bin/:$PATH
-            aws eks --region eu-central-1 update-kubeconfig --name eks-housepred-services --kubeconfig /var/lib/jenkins/.kube/eks-housepred-services
-            export KUBECONFIG=/var/lib/jenkins/.kube/eks-housepred-services
-            kubectl get svc 2>&1
-            ansible-playbook -i inventory deploy.yml --extra-vars \"image_id=${image_id}\"" -vvv
-          """  
+          script{
+            def image_id = registry + ":$BUILD_NUMBER"
+            sh """
+              export PATH=/var/lib/jenkins/.local/bin/:$PATH
+              aws eks --region eu-central-1 update-kubeconfig --name eks-housepred-services --kubeconfig /var/lib/jenkins/.kube/eks-housepred-services
+              export KUBECONFIG=/var/lib/jenkins/.kube/eks-housepred-services
+              kubectl get svc 2>&1
+              ansible-playbook -i inventory deploy.yml --extra-vars \"image_id=${image_id}\"" -vvv
+            """ 
+          } 
         }
       }
 
