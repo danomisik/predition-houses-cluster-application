@@ -36,8 +36,8 @@ spec:
         tier: frontend
     spec:
       containers:
-      - image: danielmisik/udacity:ml-service
-        imagePullPolicy: Always
+      - image: danielmisik/udacity:ml-service:latest
+        imagePullPolicy: "Always:
         name: housepred
         ports:
         - containerPort: 80
