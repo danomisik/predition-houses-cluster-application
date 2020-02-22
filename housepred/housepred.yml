@@ -37,7 +37,7 @@ spec:
       labels:
         build_number: v1
         app: housepred
-        build: "{{ build_number }}"
+        build: "{{ build_value }}"
         tier: frontend
     spec:
       containers:
