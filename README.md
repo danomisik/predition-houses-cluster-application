@@ -169,3 +169,5 @@ After you're finished testing the cluster, run the `delete.yml` playbook:
 
 
 
+
+https://github.com/MagalixCorp/k8scicd/blob/master/Jenkinsfile
