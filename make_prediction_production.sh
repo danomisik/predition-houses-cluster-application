@@ -25,4 +25,4 @@ curl -d '{
    }
 }'\
      -H "Content-Type: application/json" \
-     -X POST http://a5781e64b54d411ea8c6f02e80196c5e-513621483.eu-central-1.elb.amazonaws.com:$PORT/predict
+     -X POST http://a7986d099558711ea9b3802a2d1252e9-286654201.eu-central-1.elb.amazonaws.com:$PORT/predict
