@@ -11,6 +11,7 @@ spec:
     - port: 80
   selector:
     app: housepred
+    build: "{{ build_value }}"
     tier: frontend
   type: LoadBalancer
 
@@ -34,8 +35,8 @@ spec:
   template:
     metadata:
       labels:
-        build_number: v1
         app: housepred
+        build: "{{ build_value }}"
         tier: frontend
     spec:
       containers:
