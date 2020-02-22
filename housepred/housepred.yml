@@ -12,6 +12,7 @@ spec:
   selector:
     app: housepred
     build: "{{ build_number }}"
+    tier: frontend
   type: LoadBalancer
 
 ---
@@ -34,9 +35,10 @@ spec:
   template:
     metadata:
       labels:
+        build_number: v1
         app: housepred
         build: "{{ build_number }}"
-
+        tier: frontend
     spec:
       containers:
       - image: "{{ image_id }}"
