@@ -2,30 +2,30 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: housepred1
+  name: housepred
   namespace: default
   labels:
-    app: housepred1
+    app: housepred
 spec:
   ports:
     - port: 80
   selector:
-    app: housepred1
-    tier: frontend
+    app: housepred
+    build: "{{ image_id }}"
   type: LoadBalancer
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: housepred1
+  name: housepred
   namespace: default
   labels:
-    app: housepred1
+    app: housepred
 spec:
   selector:
     matchLabels:
-      app: housepred1
+      app: housepred
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -35,13 +35,13 @@ spec:
     metadata:
       labels:
         build_number: v1
-        app: housepred1
+        app: housepred
         tier: frontend
     spec:
       containers:
       - image: "{{ image_id }}"
         imagePullPolicy: "Always"
-        name: housepred1
+        name: housepred
         ports:
         - containerPort: 80
-          name: housepred1
+          name: housepred
