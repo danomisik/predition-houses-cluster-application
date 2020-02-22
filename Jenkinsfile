@@ -39,7 +39,7 @@ pipeline {
         steps{
           script{
             def image_id = registry + ":$BUILD_NUMBER"
-            def build_number = "$BUILD_NUMBER"
+            def build_number = $BUILD_NUMBER
             sh """
               export PATH=/var/lib/jenkins/.local/bin/:$PATH
               aws eks --region eu-central-1 update-kubeconfig --name eks-housepred-services --kubeconfig /var/lib/jenkins/.kube/eks-housepred-services
