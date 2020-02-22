@@ -34,9 +34,9 @@ spec:
   template:
     metadata:
       labels:
-        build_number: v1
         app: housepred
-        tier: frontend
+        build: "{{ image_id }}"
+
     spec:
       containers:
       - image: "{{ image_id }}"
