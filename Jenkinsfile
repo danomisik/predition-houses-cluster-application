@@ -44,7 +44,7 @@ pipeline {
               aws eks --region eu-central-1 update-kubeconfig --name eks-housepred-services --kubeconfig /var/lib/jenkins/.kube/eks-housepred-services
               export KUBECONFIG=/var/lib/jenkins/.kube/eks-housepred-services
               kubectl get svc 2>&1
-              ansible-playbook -i inventory deploy.yml --extra-vars \"image_id=${image_id} build_value=129\"
+              ansible-playbook -i inventory deploy.yml --extra-vars \"image_id=${image_id}\"
             """ 
           } 
         }
